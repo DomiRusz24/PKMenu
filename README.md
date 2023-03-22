@@ -1,0 +1,4 @@
+# Dependencies:
+ - ProjectKorra
+ - ProtocolLib
+ - PlaceholderAPI
