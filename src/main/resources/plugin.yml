@@ -1,0 +1,7 @@
+name: PKMenu
+version: '${project.version}'
+main: me.domirusz24.pkmenu.PKMenu
+api-version: 1.16
+depend: [ ProjectKorra, ProtocolLib, PlaceholderAPI ]
+authors: [ DomiRusz24 ]
+description: ProjectKorra extenstion that adds epic menus.
