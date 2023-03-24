@@ -42,6 +42,7 @@ public final class PKMenu extends UtilPlugin {
         LanguageExtension.getConfiguration().registerAllAnnotations(ElementMenu.class);
         LanguageExtension.getConfiguration().registerAllAnnotations(MagicMenuBase.class);
         LanguageExtension.getConfiguration().registerAllAnnotations(BindMenu.class);
+        LanguageExtension.getConfiguration().registerAllAnnotations(AbilityInfoMenu.class);
         LanguageExtension.getConfiguration().registerAllAnnotations(this);
     }
 

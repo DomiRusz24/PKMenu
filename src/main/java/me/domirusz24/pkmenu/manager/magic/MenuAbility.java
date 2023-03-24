@@ -7,6 +7,10 @@ public interface MenuAbility extends PlaceholderObject {
     String name();
     String getDescription();
     String getUsage();
+
+    String getAuthor();
+
+    String getVersion();
     String getElementId();
 
     boolean isCombo();
@@ -19,6 +23,8 @@ public interface MenuAbility extends PlaceholderObject {
             case "description", "desc" -> getDescription();
             case "usage", "instructions" -> getUsage();
             case "combo" -> isCombo() ? "✔" : "✕";
+            case "author" -> getAuthor();
+            case "version", "ver"  -> getVersion();
             default -> null;
         };
     }

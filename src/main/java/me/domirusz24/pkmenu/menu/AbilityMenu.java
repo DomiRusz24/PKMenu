@@ -25,9 +25,10 @@ public class AbilityMenu extends MagicMenuBase {
     @Override
     protected void displayMenu() {
         putPrevious((p) -> menuManager.getElementMenu().build(p));
-        newLine();
+        newLine(2);
         display(element);
         for (MenuAbility ability : getManager().getAbilities(element, getPlayer())) {
+            if (ability.isHidden()) continue;
             tab();
             display(element, ability);
             newLine();
@@ -38,6 +39,7 @@ public class AbilityMenu extends MagicMenuBase {
         for (MenuElement subElement : getManager().getAllSubElements(element)) {
             display(subElement);
             for (MenuAbility ability : getManager().getAbilities(subElement, getPlayer())) {
+                if (ability.isHidden()) continue;
                 tab();
                 display(subElement, ability);
                 newLine();
@@ -51,16 +53,16 @@ public class AbilityMenu extends MagicMenuBase {
     public static String LANG_ABILITY_HOVER = "&7%ability_description%";
 
     @Language("Menu.AbilityInfo")
-    public static String LANG_ABILITY_INFO = "&7(&8i&7)";
+    public static String LANG_ABILITY_INFO = "&7[ %element_primary%i&7 ]";
 
     @Language("Menu.AbilityBind")
-    public static String LANG_ABILITY_BIND = "&7(&8+&7)";
+    public static String LANG_ABILITY_BIND = "&7[ %element_primary%+&7 ]";
 
     @Language("Menu.AbilityBindHover")
     public static String LANG_ABILITY_BIND_HOVER = "&7Click to bind this ability.";
 
     @Language("Menu.AlreadyBound")
-    public static String LANG_ALREADY_BINDED = "%element_primary%(%element_secondary%%slot%%element_primary%)";
+    public static String LANG_ALREADY_BINDED = "%element_primary%[%element_secondary%%slot%%element_primary%]";
 
     @Language("Menu.AlreadyBoundHover")
     public static String LANG_ALREADY_BINDED_HOVER = "&7This ability is already binded on slot %slot%";
@@ -85,18 +87,25 @@ public class AbilityMenu extends MagicMenuBase {
         }
         addMessage(" ");
         if (ability.getUsage() != null && !ability.getUsage().isBlank()) {
-            addHoverMessage(LANG_ABILITY_INFO, LANG_ABILITY_INFO_HOVER, ability, element);
-            addMessage(" ");
+            addHoverAndClickMessage(LANG_ABILITY_INFO, LANG_ABILITY_INFO_HOVER, (p) -> openInfoMenu(ability), ability, element);
+        } else {
+            addClickableMessage(LANG_ABILITY_INFO, (p) -> openInfoMenu(ability), ability, element);
         }
+        addMessage(" ");
+
+        addHoverAndClickMessage(
+                LANG_ABILITY_BIND,
+                LANG_ABILITY_BIND_HOVER,
+                (p) -> openBindMenu(ability), ability, element);
 
         for (Integer slot : binds.keySet()) {
             MenuAbility bindedAbility = binds.get(slot);
             if (bindedAbility == null) continue;
             if (ability.name().equals(bindedAbility.name())) {
-                addHoverAndClickMessage(
+                addMessage(" ");
+                addHoverMessage(
                         LANG_ALREADY_BINDED.replaceAll("%slot%", String.valueOf(slot)),
                         LANG_ALREADY_BINDED_HOVER.replaceAll("%slot%", String.valueOf(slot)),
-                        (p) -> openBindMenu(ability),
                         ability,
                         element
                 );
@@ -104,14 +113,13 @@ public class AbilityMenu extends MagicMenuBase {
             }
         }
 
-        addHoverAndClickMessage(
-                LANG_ABILITY_BIND,
-                LANG_ABILITY_BIND_HOVER,
-                (p) -> openBindMenu(ability), ability, element);
-
     }
 
     private void openBindMenu(MenuAbility ability) {
         menuManager.getBindMenu().build(getPlayer(), ability, element);
+    }
+
+    private void openInfoMenu(MenuAbility ability) {
+        menuManager.getAbilityInfoMenu().build(getPlayer(), ability, element);
     }
 }

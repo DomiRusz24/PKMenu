@@ -17,6 +17,16 @@ public record MockAbility(@Getter String name) implements MenuAbility {
     }
 
     @Override
+    public String getAuthor() {
+        return "Unknown";
+    }
+
+    @Override
+    public String getVersion() {
+        return "Unknown";
+    }
+
+    @Override
     public String getElementId() {
         return "unknown";
     }

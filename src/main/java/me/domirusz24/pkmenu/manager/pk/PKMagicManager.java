@@ -3,6 +3,7 @@ package me.domirusz24.pkmenu.manager.pk;
 import com.projectkorra.projectkorra.BendingPlayer;
 import com.projectkorra.projectkorra.Element;
 import com.projectkorra.projectkorra.ProjectKorra;
+import com.projectkorra.projectkorra.ability.AddonAbility;
 import com.projectkorra.projectkorra.ability.CoreAbility;
 import com.projectkorra.projectkorra.event.BendingReloadEvent;
 import me.domirusz24.pkmenu.config.ColorCorrectionConfig;
@@ -42,7 +43,11 @@ public class PKMagicManager implements MagicManager, Listener {
         abilities.clear();
         elements.clear();
         for (CoreAbility ability : CoreAbility.getAbilities()) {
-            abilities.put(ability.getName(), new PKAbility(ability));
+            if (ability instanceof AddonAbility) {
+                abilities.put(ability.getName(), new PKAddonAbility(ability, (AddonAbility) ability));
+            } else {
+                abilities.put(ability.getName(), new PKAbility(ability));
+            }
         }
 
         for (Element element : Element.getAllElements()) {

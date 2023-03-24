@@ -47,9 +47,9 @@ public class BindMenu extends MagicMenuBase {
 
     private Map<Integer, MenuAbility> binds;
 
-    public record BindMenuArguments(MenuAbility ability, MenuElement previous){}
+    public record AbilityAndElementArg(MenuAbility ability, MenuElement previous){}
 
-    public BindMenu(Player player, BindMenuArguments args, MagicManager manager, MenuManager menuManager) {
+    public BindMenu(Player player, AbilityAndElementArg args, MagicManager manager, MenuManager menuManager) {
         super(player, manager, menuManager);
         this.ability = args.ability;
         this.previous = args.previous;

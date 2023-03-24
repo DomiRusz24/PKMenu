@@ -1,5 +1,6 @@
 package me.domirusz24.pkmenu.manager.pk;
 
+import com.projectkorra.projectkorra.ProjectKorra;
 import com.projectkorra.projectkorra.ability.ComboAbility;
 import com.projectkorra.projectkorra.ability.CoreAbility;
 import lombok.Getter;
@@ -7,7 +8,11 @@ import lombok.RequiredArgsConstructor;
 import me.domirusz24.pkmenu.manager.magic.MenuAbility;
 
 
-public record PKAbility(@Getter CoreAbility ability) implements MenuAbility {
+@RequiredArgsConstructor
+public class PKAbility implements MenuAbility {
+
+    @Getter
+    private final CoreAbility ability;
 
     @Override
     public String name() {
@@ -22,6 +27,16 @@ public record PKAbility(@Getter CoreAbility ability) implements MenuAbility {
     @Override
     public String getUsage() {
         return ability.getInstructions();
+    }
+
+    @Override
+    public String getAuthor() {
+        return "ProjectKorra";
+    }
+
+    @Override
+    public String getVersion() {
+        return ProjectKorra.plugin.getDescription().getVersion();
     }
 
     @Override
